@@ -2,9 +2,18 @@
 #include <stdio.h>
 
 main(){
-	int a,b,c; 
-	a = 3;
-	printf("\n Valor de a: %i.\n",a); //Sintaxis para mostarar un valor
-	printf("\n Hola mundo, probando compilacion en Linux \n \n");
+	int a;
+	float b;
+	double c;
+	char z;
 
+	a = 3;
+	b=20.9;
+	c=10.5;
+	z='a';
+
+	printf("\n Valor de a: %i.\nValor de b: %f.\n",a,b); //Sintaxis para mostarar un valor
+	
+	printf("\n Hola mundo, probando compilacion en Linux \n \n");
+	return 0; 
 }
