@@ -1,19 +1,17 @@
 //Programa que resuelve factoriales
 #include <stdio.h>
+#define PI 3.1416 // Define variable global PI con el valor 3.1416
 
 main(){
-	int a;
-	float b;
-	double c;
-	char z;
+	int y;
+	float x;
 
-	a = 3;
-	b=20.9;
-	c=10.5;
-	z='a';
+	x=PI;
 
-	printf("\n Valor de a: %i.\nValor de b: %f.\n",a,b); //Sintaxis para mostarar un valor
-	
-	printf("\n Hola mundo, probando compilacion en Linux \n \n");
+	printf("\nEl valor de x es: %f \n",x); //%f el f es porq es flotante
+	printf("\nIntroduce un valor para y: ");
+	scanf("%i", &y); //%i el i es porque es un entero!!!
+	printf("\nEl valor de y es: %i \n", y);
+
 	return 0; 
 }
