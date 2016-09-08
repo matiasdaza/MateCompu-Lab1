@@ -1,14 +1,8 @@
-//Programa que resuelve factoriales
 #include <stdio.h>
 #include <time.h> //Librería para medir el tiempo
 #include <gmp.h> //Librería para trabajo matemático
 
-void combinatoria(int n, int k);
-
-//arcg: cantidad de parámetros contando el nombre del ejecutable que es el primer parámetro.
-//argv[]: Un arreglo que contiene todos los parámetros recibidos.
-//Lo hago para recibir los valores desde la consola!!!
-
+void CombSimplificada(int n, int k);
 
 main(int argc, char *argv[])
 {
@@ -32,47 +26,64 @@ main(int argc, char *argv[])
 	else
 	{
 		
-		combinatoria(n,k); //Se manda los datos ingresados.
+		CombSimplificada(n,k); //Se manda los datos ingresados.
 	}
-	
-	fin=clock();
-	printf("El tiempo de ejecución fue de: %f \n",(fin-inicio)/(double)CLOCKS_PER_SEC); // %f es porque es un flotante!!!
 
-	return 0; 
+	return 0;
 }
 
-void combinatoria(int n, int k)
+void CombSimplificada(int n, int k)
 {
-	int i;
-	mpz_t facn, fack, facdif, denominador, combinatoriaFinal, dif; // mpz_t son variables del tipo entero
-	mpz_init (denominador); // mpz_init lo uso para inicializar la variable en 0.
+	int i=1, dif;
+	mpz_t facn, fack, facdif, denominador, combinatoriaFinal; // mpz_t son variables del tipo entero
+	mpz_init_set_ui(denominador,1); // mpz_init lo uso para inicializar la variable en 0.
 	mpz_init (combinatoriaFinal);
 	mpz_init_set_ui(facn,1); // mpz_init_set_ui lo uso para inicializar la variable en 1.
 	mpz_init_set_ui(fack,1);
-	i=1;
-	while(i<=n)
+	dif=n-k;
+	if(k>dif)
 	{
-		mpz_mul_ui(facn,facn,i); // Para sacar el factorial de n, facn=facn*i
-		i++;
+		while(k<n)
+		{
+			mpz_mul_ui(facn,facn,n); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
+			n=n-1;
+			
+		}
+		k=1;
+
 	}
-	i=1;
+	if(k!=1 && k<dif)
+	{
+		printf("Entro\n");
+		while(dif<=n)
+		{
+			mpz_mul_ui(facn,facn,n); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
+			n=n-1;
+		}
+		dif=1;
+	}
+	i=1;	
 	while(i<=k)
 	{
 		mpz_mul_ui(fack,fack,i);
 		i++;
 	}
-	gmp_printf("%i! = %Zd \n", n, facn); //Esto dirá: n! = facn pero con los valores de la varible.
-	gmp_printf("%i! = %Zd \n", k, fack);
 	mpz_init_set_ui(facdif,1);
 	i=1;
-	while(i<=(n-k))
+	while(i<=dif)
 	{
 		mpz_mul_ui(facdif,facdif,i); // Para sacar el factorial de la diferencia, facdif=facdif*i
 		i++;
 	}
-	gmp_printf("(n-k)! = %Zd \n", facdif);
-	mpz_mul(denominador,facdif,fack); // Multiplicación para el denominador (n-k)! * k! 
-	gmp_printf("k!(n-k)! = %Zd \n", denominador); // Se imprime la multiplicación de (n-k)! * k!
+
+	gmp_printf("\n%Zd\n",fack);
+	gmp_printf("\n%Zd\n",facdif);
+
+	mpz_mul(denominador, fack, facdif);
+	
+	gmp_printf("\nEl numerador simplificado es = %Zd \n",facn); //Esto dirá: n! = facn pero con los valores de la varible.
+	gmp_printf("El denominador simplificado es = %Zd \n", denominador);
+
 	mpz_cdiv_q(combinatoriaFinal,facn,denominador);
 	gmp_printf("El resultado de la combinatoria es = %Zd \n", combinatoriaFinal); 
 
