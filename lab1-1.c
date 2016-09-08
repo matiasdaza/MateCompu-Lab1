@@ -17,13 +17,17 @@ main(int argc, char *argv[])
 	inicio=clock();
 	n = atoi(argv[1]); // Se convierten los datos ingresados a variable tipo entero.
 	k = atoi(argv[2]);
-
+	if(k<0 || n<0) //Condición para que los valores de n y k sean positivos!
+	{
+		printf("Los valores de n y de k deben ser positivos\n");
+		return 0;
+	}
 	if (k > n) // Como es un arreglo uno se guarda en la posición 1 y el otro en la 2.Si se ingresan mal los datos, el programa lo acusará y se cerrará.
 	{
 		printf("El valor de n tiene que ser mayor que el de k.\n"); // Si se ingresan mal los datos, el programa lo acusará y se cerrará.
 		return 0;
 	}
-	if (argc != 3) //COmo argc es la cantidad de parámetros, si lee más de 3 estará malo (porque solo necesitamos n y k)
+	if (argc != 3) //Como argc es la cantidad de parámetros, si lee más de 3 estará malo (porque solo necesitamos n y k)
 		printf("Para ejecutar use: ./Ejecutar [valor n] [valor k] \n"); // Si se ingresan más de dos argumentos en la terminal, el programa lo acusará y se cerrará.
 	else
 	{
