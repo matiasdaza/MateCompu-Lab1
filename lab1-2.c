@@ -28,6 +28,8 @@ main(int argc, char *argv[])
 		
 		CombSimplificada(n,k); //Se manda los datos ingresados.
 	}
+	fin=clock();
+	printf("El tiempo de ejecución fue de: %f \n",(fin-inicio)/(double)CLOCKS_PER_SEC); // %f es porque es un flotante!!!
 
 	return 0;
 }
@@ -41,7 +43,7 @@ void CombSimplificada(int n, int k)
 	mpz_init_set_ui(facn,1); // mpz_init_set_ui lo uso para inicializar la variable en 1.
 	mpz_init_set_ui(fack,1);
 	dif=n-k;
-	if(k>dif)
+	if(k>dif && k!=dif)
 	{
 		while(k<n)
 		{
@@ -52,9 +54,9 @@ void CombSimplificada(int n, int k)
 		k=1;
 
 	}
-	if(k!=1 && k<dif)
+	if(k!=1 && k<dif && k!=dif)
 	{
-		printf("Entro\n");
+		
 		while(dif<=n)
 		{
 			mpz_mul_ui(facn,facn,n); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
@@ -62,6 +64,18 @@ void CombSimplificada(int n, int k)
 		}
 		dif=1;
 	}
+	if(k==dif){
+		i=1;
+		while(i<=n)
+		{
+			printf("Entro\n");
+			mpz_mul_ui(facn,facn,i); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
+			i++;
+			printf("%Zd\n", facn);
+		}
+
+	}
+	
 	i=1;	
 	while(i<=k)
 	{
