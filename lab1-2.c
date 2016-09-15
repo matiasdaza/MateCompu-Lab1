@@ -36,7 +36,7 @@ main(int argc, char *argv[])
 
 void CombSimplificada(int n, int k)
 {
-	int i=1, dif;
+	int i=1, dif, sw=0;
 	mpz_t facn, fack, facdif, denominador, combinatoriaFinal; // mpz_t son variables del tipo entero
 	mpz_init_set_ui(denominador,1); // mpz_init lo uso para inicializar la variable en 0.
 	mpz_init (combinatoriaFinal);
@@ -49,32 +49,33 @@ void CombSimplificada(int n, int k)
 		{
 			mpz_mul_ui(facn,facn,n); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
 			n=n-1;
-			
 		}
-		k=1;
-
+		sw=1; //Se utiliza este switch para diferenciar que k se simplifica con n
 	}
-	if(k!=1 && k<dif && k!=dif)
+	if(sw!=1 && k<dif && k!=dif)
 	{
 		
-		while(dif<=n)
+		while(dif<n)
+		{
+			mpz_mul_ui(facn,facn,n); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
+			n=n-1;
+		}
+		sw=2; //Se utiliza este switch para diferenciar que dif se simplifica con n
+	}
+	if(k==dif){
+		while(dif<n)
 		{
 			mpz_mul_ui(facn,facn,n); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
 			n=n-1;
 		}
 		dif=1;
-	}
-	if(k==dif){
-		i=1;
-		while(i<=n)
-		{
-			printf("Entro\n");
-			mpz_mul_ui(facn,facn,i); // Para sacar el factorial de n, facn=facn*n, para simplificar al encontrar n=k
-			i++;
-			printf("%Zd\n", facn);
-		}
 
 	}
+	if(sw==1)
+		k=1; //como k se simplifica con n, k queda con valor 1;
+	if(sw==2)
+		dif=1;	//como k se simplifica con n, dif queda con valor 1;
+
 	
 	i=1;	
 	while(i<=k)
