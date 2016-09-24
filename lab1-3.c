@@ -1,4 +1,3 @@
-//Programa que resuelve factoriales
 #include <stdio.h>
 #include <time.h> //Librería para medir el tiempo
 #include <gmp.h> //Librería para trabajo matemático
@@ -17,12 +16,12 @@ main(int argc, char *argv[])
 	inicio=clock();
 	n = atoi(argv[1]); // Se convierten los datos ingresados a variable tipo entero.
 	k = atoi(argv[2]);
-	if(k<0 || n<0) //Condición para que los valores de n y k sean positivos!
+	if(k <0 || n<0) //Condición para que los valores de n y k sean positivos!
 	{
 		printf("Los valores de n y de k deben ser positivos\n");
 		return 0;
 	}
-	if (k > n) // Como es un arreglo uno se guarda en la posición 1 y el otro en la 2.Si se ingresan mal los datos, el programa lo acusará y se cerrará.
+	if (k>n)
 	{
 		printf("El valor de n tiene que ser mayor que el de k.\n"); // Si se ingresan mal los datos, el programa lo acusará y se cerrará.
 		return 0;
@@ -35,6 +34,7 @@ main(int argc, char *argv[])
 		combinatoria(n,k); //Se manda los datos ingresados.
 	}
 	
+	
 	fin=clock();
 	printf("El tiempo de ejecución fue de: %f \n",(fin-inicio)/(double)CLOCKS_PER_SEC); // %f es porque es un flotante!!!
 
@@ -44,11 +44,12 @@ main(int argc, char *argv[])
 void combinatoria(int n, int k)
 {
 	int i;
-	mpz_t facn, fack, facdif, denominador, combinatoriaFinal, dif; // mpz_t son variables del tipo entero
+	mpz_t facn, facdif, denominador, combinatoriaFinal, dif; // mpz_t son variables del tipo entero
+	mpf_t fack;
 	mpz_init (denominador); // mpz_init lo uso para inicializar la variable en 0.
 	mpz_init (combinatoriaFinal);
 	mpz_init_set_ui(facn,1); // mpz_init_set_ui lo uso para inicializar la variable en 1.
-	mpz_init_set_ui(fack,1);
+	mpf_init_set_ui(fack,1);
 	i=1;
 	while(i<=n)
 	{
@@ -56,13 +57,14 @@ void combinatoria(int n, int k)
 		i++;
 	}
 	i=1;
+	
 	while(i<=k)
 	{
-		mpz_mul_ui(fack,fack,i);
+		mpf_mul_ui(fack,fack,i);
 		i++;
 	}
 	gmp_printf("%i! = %Zd \n", n, facn); //Esto dirá: n! = facn pero con los valores de la varible.
-	gmp_printf("%i! = %Zd \n", k, fack);
+	gmp_printf("%i! = %Ff \n", k, fack);
 	mpz_init_set_ui(facdif,1);
 	i=1;
 	while(i<=(n-k))
@@ -74,6 +76,14 @@ void combinatoria(int n, int k)
 	mpz_mul(denominador,facdif,fack); // Multiplicación para el denominador (n-k)! * k! 
 	gmp_printf("k!(n-k)! = %Zd \n", denominador); // Se imprime la multiplicación de (n-k)! * k!
 	mpz_cdiv_q(combinatoriaFinal,facn,denominador);
-	gmp_printf("El resultado de la combinatoria es = %Zd \n", combinatoriaFinal); 
+	gmp_printf("El resultado de la combinatoria es = %Zd \n", combinatoriaFinal);
+	
+	 
+	mpz_clear(facn);
+	mpz_clear(fack);
+	mpz_clear(facdif);
+	mpz_clear(denominador);
+	mpz_clear(combinatoriaFinal);
+	mpz_clear(dif);
 
 }

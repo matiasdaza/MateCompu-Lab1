@@ -101,5 +101,10 @@ void CombSimplificada(int n, int k)
 
 	mpz_cdiv_q(combinatoriaFinal,facn,denominador);
 	gmp_printf("El resultado de la combinatoria es = %Zd \n", combinatoriaFinal); 
+	mpz_clear(facn);
+	mpz_clear(fack);
+	mpz_clear(facdif);
+	mpz_clear(denominador);
+	mpz_clear(combinatoriaFinal);
 
 }

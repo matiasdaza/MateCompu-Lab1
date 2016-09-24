@@ -3,7 +3,7 @@
 #include <time.h> //Librería para medir el tiempo
 #include <gmp.h> //Librería para trabajo matemático
 
-void combinatoria(int n, int k);
+void combinatoria(mpz_t n, mpz_t k);
 
 //arcg: cantidad de parámetros contando el nombre del ejecutable que es el primer parámetro.
 //argv[]: Un arreglo que contiene todos los parámetros recibidos.
@@ -12,11 +12,11 @@ void combinatoria(int n, int k);
 
 main(int argc, char *argv[])
 {
-	int n, k;
+	mpz_t n,k;
 	clock_t inicio, fin; // Se crea variable 'clock_t' para calcular el tiempo de ejecúción del programa.
 	inicio=clock();
-	n = atoi(argv[1]); // Se convierten los datos ingresados a variable tipo entero.
-	k = atoi(argv[2]);
+	mpf_init_set_str (k, argv[2], 10); //Esto es para evitar el atoi, forma más directa
+	mpf_init_set_str (n, argv[1], 10); //Esto es para evitar el atoi, forma más directa
 	if(k<0 || n<0) //Condición para que los valores de n y k sean positivos!
 	{
 		printf("Los valores de n y de k deben ser positivos\n");
@@ -41,7 +41,7 @@ main(int argc, char *argv[])
 	return 0; 
 }
 
-void combinatoria(int n, int k)
+void combinatoria(mpz_t n, mpz_t k)
 {
 	int i;
 	mpz_t facn, fack, facdif, denominador, combinatoriaFinal, dif; // mpz_t son variables del tipo entero
@@ -61,8 +61,8 @@ void combinatoria(int n, int k)
 		mpz_mul_ui(fack,fack,i);
 		i++;
 	}
-	gmp_printf("%i! = %Zd \n", n, facn); //Esto dirá: n! = facn pero con los valores de la varible.
-	gmp_printf("%i! = %Zd \n", k, fack);
+	gmp_printf("%Zd! = %Zd \n", n, facn); //Esto dirá: n! = facn pero con los valores de la varible.
+	gmp_printf("%Zd! = %Zd \n", k, fack);
 	mpz_init_set_ui(facdif,1);
 	i=1;
 	while(i<=(n-k))
