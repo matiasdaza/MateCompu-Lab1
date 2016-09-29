@@ -77,8 +77,9 @@ void combinatoria(int n, int k)
 	mpf_div(combinatoriaFinal,facn,denominador);
 	gmp_printf("El resultado de la combinatoria es = %Ff \n", combinatoriaFinal);
 	
-	 
-	mpf_clear(facn);
+	//Liberamos el espacio de memoria de las variables
+	
+	mpf_clear(facn); 
 	mpf_clear(fack);
 	mpf_clear(facdif);
 	mpf_clear(denominador);
