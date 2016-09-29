@@ -44,16 +44,15 @@ main(int argc, char *argv[])
 void combinatoria(int n, int k)
 {
 	int i;
-	mpz_t facn, facdif, denominador, combinatoriaFinal, dif; // mpz_t son variables del tipo entero
-	mpf_t fack;
-	mpz_init (denominador); // mpz_init lo uso para inicializar la variable en 0.
-	mpz_init (combinatoriaFinal);
-	mpz_init_set_ui(facn,1); // mpz_init_set_ui lo uso para inicializar la variable en 1.
+	mpf_t facn, fack, facdif, denominador, combinatoriaFinal, dif; // mpz_t son variables del tipo entero
+	mpf_init (denominador); // mpz_init lo uso para inicializar la variable en 0.
+	mpf_init (combinatoriaFinal);
+	mpf_init_set_ui(facn,1); // mpz_init_set_ui lo uso para inicializar la variable en 1.
 	mpf_init_set_ui(fack,1);
 	i=1;
 	while(i<=n)
 	{
-		mpz_mul_ui(facn,facn,i); // Para sacar el factorial de n, facn=facn*i
+		mpf_mul_ui(facn,facn,i); // Para sacar el factorial de n, facn=facn*i
 		i++;
 	}
 	i=1;
@@ -63,27 +62,27 @@ void combinatoria(int n, int k)
 		mpf_mul_ui(fack,fack,i);
 		i++;
 	}
-	gmp_printf("%i! = %Zd \n", n, facn); //Esto dirá: n! = facn pero con los valores de la varible.
+	gmp_printf("%i! = %Ff \n", n, facn); //Esto dirá: n! = facn pero con los valores de la varible.
 	gmp_printf("%i! = %Ff \n", k, fack);
-	mpz_init_set_ui(facdif,1);
+	mpf_init_set_ui(facdif,1);
 	i=1;
 	while(i<=(n-k))
 	{
-		mpz_mul_ui(facdif,facdif,i); // Para sacar el factorial de la diferencia, facdif=facdif*i
+		mpf_mul_ui(facdif,facdif,i); // Para sacar el factorial de la diferencia, facdif=facdif*i
 		i++;
 	}
-	gmp_printf("(n-k)! = %Zd \n", facdif);
-	mpz_mul(denominador,facdif,fack); // Multiplicación para el denominador (n-k)! * k! 
-	gmp_printf("k!(n-k)! = %Zd \n", denominador); // Se imprime la multiplicación de (n-k)! * k!
-	mpz_cdiv_q(combinatoriaFinal,facn,denominador);
-	gmp_printf("El resultado de la combinatoria es = %Zd \n", combinatoriaFinal);
+	gmp_printf("(n-k)! = %Ff \n", facdif);
+	mpf_mul(denominador,facdif,fack); // Multiplicación para el denominador (n-k)! * k! 
+	gmp_printf("k!(n-k)! = %Ff \n", denominador); // Se imprime la multiplicación de (n-k)! * k!
+	mpf_div(combinatoriaFinal,facn,denominador);
+	gmp_printf("El resultado de la combinatoria es = %Ff \n", combinatoriaFinal);
 	
 	 
-	mpz_clear(facn);
-	mpz_clear(fack);
-	mpz_clear(facdif);
-	mpz_clear(denominador);
-	mpz_clear(combinatoriaFinal);
-	mpz_clear(dif);
+	mpf_clear(facn);
+	mpf_clear(fack);
+	mpf_clear(facdif);
+	mpf_clear(denominador);
+	mpf_clear(combinatoriaFinal);
+	mpf_clear(dif);
 
 }
